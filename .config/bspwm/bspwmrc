@@ -1,0 +1,27 @@
+#! /bin/sh
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+nitrogen --restore
+
+bspc config border_width         2
+bspc config window_gap           5
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc rule -a Gimp desktop='^5' state=tiling follow=on
+#layer=below
+bspc rule -a firefox desktop='^2' follow=on
+#bspc rule -a Gedit desktop='^3' follow=on
+#bspc rule -a Thunar desktop='^3'
+bspc rule -a jetbrains-pycharm-ce desktop='^3' follow=on
+bspc rule -a TelegramDesktop desktop='^4' state=floating
+#bspc rule -a mplayer2 state=floating
+#bspc rule -a Kupfer.py focus=on
+#bspc rule -a Screenkey manage=off
+
+$HOME/.config/polybar/launch.sh
