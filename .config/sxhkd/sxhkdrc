@@ -118,7 +118,7 @@ super + alt + shift + {h,j,k,l}
 
 # move a floating window
 super + {Left,Down,Up,Right}
-	bspc node -v {-10 0,0 10,0 -10,10 0}
+	bspc node -v {-5 0,0 5,0 -5,5 0}
 
 #{XF86AudioRaiseVolume,XF86AudioLowerVolume}
 #	pamixer -{i,d} 2

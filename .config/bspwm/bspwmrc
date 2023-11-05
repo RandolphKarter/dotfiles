@@ -2,26 +2,47 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+connected=$(xrandr | grep 'HDMI-1 connected')
+if [ "${connected}" ]; then
+    xrandr --output eDP-1 --primary --mode 1920x1080 --pos 1080x840 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate left
+    bspc monitor eDP-1 -d I II III IV V
+    bspc monitor HDMI-1 -d VI VII VIII IX X
+    bspc monitor eDP-1 -s HDMI-1
+else
+    bspc monitor eDP-1 -d I II III IV V VI VII VIII IX 
+fi
 
+#for pycharm and charles
+wmname LG3D
+#export _JAVA_AWT_WM_NONREPARENTING=1
+#QT_AUTO_SCREEN_SCALE_FACTOR=1
+
+#$HOME/dev/check_hdmi.sh &
+picom --config ~/.config/picom/picom.sample.conf -f &
+kitty &
+xbindkeys &
+xsetroot -cursor_name left_ptr &
+. $HOME/.config/polybar/launch.sh &
 nitrogen --restore
 
 bspc config border_width         2
 bspc config window_gap           5
 
-bspc config split_ratio          0.52
+bspc config split_ratio          0.5
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
+bspc config normal_border_color "#970ac2"
+#bspc config active_border_color "#c2500a" 
+bspc config focused_border_color "#35c20a"
+
 bspc rule -a Gimp desktop='^5' state=tiling follow=on
 #layer=below
-bspc rule -a firefox desktop='^2' follow=on
+#bspc rule -a Firefox-esr desktop='^2' follow=oncursor_name left_ptr &
 #bspc rule -a Gedit desktop='^3' follow=on
 #bspc rule -a Thunar desktop='^3'
 bspc rule -a jetbrains-pycharm-ce desktop='^3' follow=on
-bspc rule -a TelegramDesktop desktop='^4' state=floating
+bspc rule -a TelegramDesktop desktop='^4' state=floating follow=on
 #bspc rule -a mplayer2 state=floating
 #bspc rule -a Kupfer.py focus=on
 #bspc rule -a Screenkey manage=off
-
-$HOME/.config/polybar/launch.sh
